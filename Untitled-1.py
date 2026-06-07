@@ -14,22 +14,36 @@ def carregando():
     time.sleep(1)
     limpar()
 
+def retornar():
+    limpar()
+    print("\nRetornando ao menu principal...")
+    time.sleep(1)
+    limpar()
+
+def caractere_errado():
+    limpar()
+    print("\nO Caractere digitado não é uma opção válida...")
+    time.sleep(1)
+    limpar()
 
 #Introdução
 print("""
-     ███████╗██╗███████╗████████╗███████╗███╗   ███╗ █████╗     
-     ██╔════╝██║██╔════╝╚══██╔══╝██╔════╝████╗ ████║██╔══██╗    
-     ███████╗██║███████╗   ██║   █████╗  ██╔████╔██║███████║    
-     ╚════██║██║╚════██║   ██║   ██╔══╝  ██║╚██╔╝██║██╔══██║    
-     ███████║██║███████║   ██║   ███████╗██║ ╚═╝ ██║██║  ██║    
-     ╚══════╝╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝                                                                                                                                                       
+     
+    ███████╗██╗███████╗████████╗███████╗███╗   ███╗ █████╗ 
+    ██╔════╝██║██╔════╝╚══██╔══╝██╔════╝████╗ ████║██╔══██╗
+    ███████╗██║███████╗   ██║   █████╗  ██╔████╔██║███████║
+    ╚════██║██║╚════██║   ██║   ██╔══╝  ██║╚██╔╝██║██╔══██║
+    ███████║██║███████║   ██║   ███████╗██║ ╚═╝ ██║██║  ██║
+    ╚══════╝╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝
+      
                         ██████╗ ███████╗    
                         ██╔══██╗██╔════╝     
                         ██║  ██║█████╗       
                         ██║  ██║██╔══╝      
                         ██████╔╝███████╗    
                         ╚═════╝ ╚══════╝     
-██████╗██╗  ██╗ █████╗ ███╗   ███╗ █████╗ ██████╗  ██████╗ ███████╗  
+      
+ ██████╗██╗  ██╗ █████╗ ███╗   ███╗ █████╗ ██████╗  ██████╗ ███████╗  
 ██╔════╝██║  ██║██╔══██╗████╗ ████║██╔══██╗██╔══██╗██╔═══██╗██╔════╝
 ██║     ███████║███████║██╔████╔██║███████║██║  ██║██║   ██║███████╗
 ██║     ██╔══██║██╔══██║██║╚██╔╝██║██╔══██║██║  ██║██║   ██║╚════██║ 
@@ -83,15 +97,17 @@ while True:
     
     menu_opcoes = input(" Selecione uma opção desejada: ")
 
+    #Opção 1 - Criar Chamado
     if menu_opcoes == "1":
         carregando()
-        print("""
+        while True:
+            print("""
          ██████╗██████╗ ██╗ █████╗  ██████╗ █████╗  ██████╗ 
         ██╔════╝██╔══██╗██║██╔══██╗██╔════╝██╔══██╗██╔═══██╗
         ██║     ██████╔╝██║███████║██║     ███████║██║   ██║
         ██║     ██╔══██╗██║██╔══██║██║     ██╔══██║██║   ██║
         ╚██████╗██║  ██║██║██║  ██║╚██████╗██║  ██║╚██████╔╝
-       ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚═════╝ 
+         ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚═════╝ 
                                                     
                         ██████╗ ███████╗
                         ██╔══██╗██╔════╝
@@ -108,21 +124,64 @@ while True:
 ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚══════╝
                                                                     
                     <  Criação de Chamados  >
+
+    """)
+            #Questionário para criação de chamados
+            print("<---------===========<( Dados do Usuário )>==========--------->\n")
+
+            nome = input(" Digite o nome do solicitante: ")
+
+            print("\n<---------===========<( Dados do Chamado )>==========--------->\n")
+
+            titulo = input(" Digite o título do chamado: ")
+
+            descricao = input(" Digite a descrição do chamado: ")
+
+            while True:
+                try:
+                    prioridade = int(input(" Digite a prioridade do chamado (Baixo = 1, Média = 2, Alta = 3): "))
+                    break
+                except ValueError:
+                                
+                    print("""  ________________________ 
+ |                        |
+ | Digite apenas numeros! |
+ |________________________|
 """)
-        print("<--------==========( Dados do Usuário )=========-------->\n")
+            #Dados do chamado registrado.
+            registro_chamados = {
+                "nome": nome,
+                "titulo": titulo,
+                "descricao": descricao,
+                "prioridade": prioridade
+            }
 
-        input(" Digite o nome do solicitante: ")
+            #Pergunta para adicionar outro chamado ou retornar ao menu principal.
+            print("\n<-----------==============<( Opções )>=============----------->\n")
 
-        print("\n<--------==========( Dados do Problema )=========-------->\n")
+            time.sleep(1)
+            print(" Chamado criado com sucesso!")
+            time.sleep(0.7)
+            add_outro = input(" Deseja Adicionar algum outro chamado? (s/n): ").lower()
 
-        input(" Digite o título do chamado: ")
+            if add_outro == "s":
+                limpar()
+                print("\nRecomeçando...")
+                time.sleep(0.8)
+                limpar()
+        
+            elif add_outro == "n":
+                limpar()
+                print("\nRetornando ao menu principal...")
+                time.sleep(1)
+                limpar()
+                break
+            
+            else:
+                caractere_errado()
 
-        input(" Digite a descrição do chamado: ")
 
-        input(" Digite a prioridade do chamado (Baixa, Média, Alta): ").lower()
-
-        input(" Digite o Status do chamado (Aberto, Fechado): ")
-
+    #Opção 2 - Acompanhar Chamado
     elif menu_opcoes == "2":
         print("")
 
