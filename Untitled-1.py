@@ -1,8 +1,15 @@
 #Importações, Funções, Variáveis, Dados, etc.
 
+from datetime import datetime
+
 import time
 import os
-import sqlite3
+
+def sep(nome):
+            return '-' * (len(nome) + 2)
+
+proximo_id = 1
+chamados = {}
 
 def limpar():
     os.system('cls')
@@ -53,7 +60,7 @@ print("""
                         < Sistema de Chamados >
 """)
 
-time.sleep(0.5)
+time.sleep(0.3)
 
 print("""
 Bem-vindo ao Sistema de Chamados! Este sistema foi desenvolvido para facilitar
@@ -62,7 +69,7 @@ acompanhar e resolver chamados de forma eficiente, garantindo que as solicitaç�
 sejam atendidas de maneira rápida e organizada.
 """)
 
-time.sleep(0.5)
+time.sleep(0.3)
 
 input("\n  Pressione Enter para continuar...")
 
@@ -88,7 +95,7 @@ while True:
                     < Menu Principal >
 """)
     
-    time.sleep(0.5)
+    time.sleep(0.3)
 
     print("""
 [1] - Criar Chamado
@@ -129,7 +136,7 @@ while True:
 
     """)
             
-            time.sleep(0.5)
+            time.sleep(0.3)
 
             #Questionário para criação de chamados
             print("<---------===========<( Dados do Usuário )>==========--------->\n")
@@ -138,14 +145,24 @@ while True:
 
             print("\n<---------===========<( Dados do Chamado )>==========--------->\n")
 
-            titulo = input(" Digite o título do chamado: ")
+            titulo = input(" Digite o título do chamado (Poucas palavras): ")
 
             descricao = input(" Digite a descrição do chamado: ")
 
             while True:
                 try:
+                    niveis = {1: "Baixa", 2: "Média", 3: "Elevado"}
                     prioridade = int(input(" Digite a prioridade do chamado (Baixo = 1, Média = 2, Alta = 3): "))
-                    break
+                    
+                    if prioridade not in niveis:
+                        print("""  ________________________________
+ |                                |
+ | Digite apenas os números:      |
+ | Baixo = 1, Média = 2, Alta = 3 |
+ |________________________________|
+""")
+                    else:
+                        break
                 except ValueError:
                                 
                     print("""  ________________________ 
@@ -154,25 +171,30 @@ while True:
  |________________________|
 """)
             #Dados do chamado registrado.
-            registro_chamados = {
+
+            chamados[proximo_id] = {
+                "id": proximo_id,
                 "nome": nome,
                 "titulo": titulo,
                 "descricao": descricao,
-                "prioridade": prioridade
+                "prioridade": niveis[prioridade],
+                "status": "Aberto",
+                "data_abertura": datetime.now().strftime("%d/%m/%Y %H:%M")
             }
+            proximo_id += 1
 
             #Pergunta para adicionar outro chamado ou retornar ao menu principal.
             print("\n<-----------==============<( Opções )>=============----------->\n")
 
-            time.sleep(1)
+            time.sleep(0.4)
             print(" Chamado criado com sucesso!")
-            time.sleep(0.7)
+            time.sleep(0.3)
             add_outro = input(" Deseja Adicionar algum outro chamado? (s/n): ").lower()
 
             if add_outro == "s":
                 limpar()
                 print("\nRecomeçando...")
-                time.sleep(0.8)
+                time.sleep(0.5)
                 limpar()
         
             elif add_outro == "n":
@@ -205,24 +227,65 @@ while True:
                             <  Acompanhamento de Chamados  >
     """)
 
-            time.sleep(0.5)
+            time.sleep(0.3)
 
+            #Listagem de todos os chamados registrados.
             print("-"*86)
             print(24*" "+"LISTA DE TODOS OS CHAMADOS REGISTRADOS"+24*" ")
             print("-"*86+"\n")
-            
-            print(6*" "+"ID"+8*" "+"TÍTULO"+8*" "+"PRIORIDADE"+8*" "+"STATUS"+10*" "+"DATA DE ABERTURA")
-            print(5*" "+4*"-"+6*" "+8*"-"+6*" "+12*"-"+6*" "+8*"-"+8*" "+18*"-"+"\n")      
 
-            input("\n Pressione Enter para retornar ao menu principal...i")
+            print(f"{'ID':^11}{'TÍTULO':^15}{'PRIORIDADE':^19}{'STATUS':^15}{'DATA DE ABERTURA':^26}")
+            print(f"{sep('ID'):^11}{sep('TÍTULO'):^15}{sep('PRIORIDADE'):^19}{sep('STATUS'):^15}{sep('DATA DE ABERTURA'):^26}")
 
+            for chamado in chamados.values():
+                id_formatacao = f"{chamado['id']:02}"
+                print(
+                    f"{id_formatacao:^11}{chamado['titulo'][:17]:^15}{chamado['prioridade']:^19}{chamado['status']:^15}{chamado['data_abertura']:^26}"
+                )
+
+            print("\n"+"-"*86+"\n")
+
+            #Total de chamados registrados.
+            if len(chamados) == 1:
+                singular = "chamado"
+            elif len(chamados) == 0:
+                singular = "chamado"
+            else:
+                singular = "chamados"
+
+            print(" Esse são TODOS os chamados registrados até o momento, há no total",len(chamados),singular+".")
+            input(" Pressione Enter para retornar ao menu principal...")
+            retornar()
+            break
 
     
     elif menu_opcoes == "3":
-        print("")
+        carregando()
+        while True:
+            print("""
+ ██████╗ ███████╗███████╗ ██████╗ ██╗    ██╗   ██╗███████╗██████╗ 
+ ██╔══██╗██╔════╝██╔════╝██╔═══██╗██║    ██║   ██║██╔════╝██╔══██╗
+ ██████╔╝█████╗  ███████╗██║   ██║██║    ██║   ██║█████╗  ██████╔╝
+ ██╔══██╗██╔══╝  ╚════██║██║   ██║██║    ╚██╗ ██╔╝██╔══╝  ██╔══██╗
+ ██║  ██║███████╗███████║╚██████╔╝███████╗╚████╔╝ ███████╗██║  ██║
+ ╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚══════╝ ╚═══╝  ╚══════╝╚═╝  ╚═╝
+                                                                 
+ ██████╗██╗  ██╗ █████╗ ███╗   ███╗ █████╗ ██████╗  ██████╗ ███████╗
+██╔════╝██║  ██║██╔══██╗████╗ ████║██╔══██╗██╔══██╗██╔═══██╗██╔════╝
+██║     ███████║███████║██╔████╔██║███████║██║  ██║██║   ██║███████╗
+██║     ██╔══██║██╔══██║██║╚██╔╝██║██╔══██║██║  ██║██║   ██║╚════██║
+╚██████╗██║  ██║██║  ██║██║ ╚═╝ ██║██║  ██║██████╔╝╚██████╔╝███████║
+ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚══════╝
+                                                                    
+                    <  Resolução de Chamados  >
+""")
+            
+            time.sleep(0.3)
 
-
-
+            print(" Essa funcionalidade ainda está em desenvolvimento, aguarde por futuras atualizações...")
+            input("\n Pressione Enter para retornar ao menu principal...")
+            retornar()
+            break
 
 
     elif menu_opcoes == "4":
