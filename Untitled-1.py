@@ -281,7 +281,6 @@ while True:
 """)
             
             time.sleep(0.3)
-
             print(" Essa funcionalidade ainda está em desenvolvimento, aguarde por futuras atualizações...")
             input("\n Pressione Enter para retornar ao menu principal...")
             retornar()
