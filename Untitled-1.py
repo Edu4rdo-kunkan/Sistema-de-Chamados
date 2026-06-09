@@ -288,7 +288,7 @@ while True:
                 break
 
             else:
-                caractere_errado
+                caractere_errado()
 
             print("\n<---------===========<( Escolha )>==========--------->")
 
@@ -366,7 +366,10 @@ while True:
                 refazer = input("Deseja resolver outro chamado? (s/n): ").lower()
 
                 if refazer == "s":
-                    refazer()
+                    limpar()
+                    print("Recomeçando")
+                    time.sleep(0.5)
+                    limpar()
                     
                 elif refazer == "n":
                     retornar()
